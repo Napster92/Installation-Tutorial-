@@ -1,0 +1,76 @@
+1: Root Password
+2: New user & add in the visudo file 
+3: wget & JDk 8 Installation
+
+sudo yum install java-1.8.0-openjdk
+
+4: password-less shh  -- use Internal IP
+
+
+10.142.0.3
+10.142.0.4
+
+
+
+
+5: spark download untar - 
+6: slave file update   -- Add the Internal IP
+7: bash_profile including  -- sbin
+8: start-all.sh
+9: Firewall set up in GCP
+10: masterIP:8080
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sudo -i
+echo "root:root" | chpasswd
+adduser training
+echo "training:training" | chpasswd
+echo 'training  ALL=(ALL:ALL) ALL' >>  /etc/sudoers
+sudo yum install wget -y
+
+# JDK Installation
+
+sudo yum install java-1.8.0-openjdk -y
+
+
+
+cat >> ~/.bash_profile <<EOL
+export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
+EOL
+source ~/.bash_profile
+
+cat >> /home/training/.bash_profile <<EOL
+export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk
+EOL
+source /home/training/.bash_profile
+
+su training
+cd
+source ~/.bash_profile
+
+# Spark Download
+wget http://mirrors.fibergrid.in/apache/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz
+tar xzf spark-2.3.2-bin-hadoop2.7.tgz
+mv spark-2.3.2-bin-hadoop2.7 spark
+
+cat >> /home/training/.bash_profile <<EOL
+export SPARK_HOME=/home/training/spark
+export PATH=$PATH:/home/training/spark/bin:$SPARK_HOME/sbin
+EOL
+source /home/training/.bash_profile
+
+
+
